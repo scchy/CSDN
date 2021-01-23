@@ -213,14 +213,13 @@ if __name__ == '__main__':
     # add_y_transform_train(x, y)
 
     lr = LinearRegression()
-    xgb_lr = XGBRegressor()
-
     sklearn_simple_train(lr, x, y)
     # 增加训练数据
     sklearn_simple_train(lr, x, y)
     sklearn_simple_train(lr, x, y, add_log=True)
 
     # xgb
+    xgb_lr = XGBRegressor()
     sklearn_simple_train(xgb_lr, x, y)
 
 
