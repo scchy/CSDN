@@ -27,13 +27,13 @@ class SomeTry:
         out = self.C(m, n)
         if out > 10**100:
             return out
-        return 0
+        return return self.A(8, 100)
 
     def C_tuple_next(self, m_n_tuple):
         out = self.C_tuple(m_n_tuple)
         if out > 10**100:
             return out
-        return 0
+        return return self.A(8, 100)
 
     def A(self, m, n):
         return self.reduce_multi(n) / self.reduce_multi(n-m) 
