@@ -1,4 +1,7 @@
-
+# python3
+# create date: 2021-04-08
+# Authore: Scc_hy
+# Func: 比较多进程运行效率
 
 from datetime import datetime 
 import numpy as np
@@ -104,24 +107,36 @@ class SomeTry:
 
 if __name__ == "__main__":
     s = SomeTry()
-    a, b, c, d = s.parallel_C(list(range(1, 100))*120, list(range(50, 150))*120)
-    print('\n','**'*25)
-    a, b, c, d = s.parallel_C2(list(range(1, 100))*120, list(range(50, 150))*120)
-    # print(a, c)
+    for i in range(5):
+        print(f'[test {i}]')
+        print('=='*30)
+        print('test parallel_C')
+        a, b, c, d = s.parallel_C(list(range(1, 100))*60, list(range(50, 150))*60)
+        print('\n','**'*25)
+        print('test parallel_C2')
+        a, b, c, d = s.parallel_C2(list(range(1, 100))*60, list(range(50, 150))*60)
+        print('\n\n')
+        # print(a, c)
+
+
 
 """
-C_tuple_next Parallel run. - done in 14.85585s
-C_next Parallel run. - done in 15.34117s
+[test 0]
+============================================================
+test parallel_C
+C_tuple_next Parallel run. - done in 8.48245s
+C_next Parallel run. - done in 8.98053s
 --------------------------------------------------
 use function
-C_tuple_next Parallel run. - done in 16.36587s
-C_next Parallel run. - done in 16.27177s
+C_tuple_next Parallel run. - done in 10.24530s
+C_next Parallel run. - done in 9.07044s
 
  **************************************************
-C_tuple Parallel run. - done in 16.23173s
-C Parallel run. - done in 15.66818s
+test parallel_C2
+C_tuple Parallel run. - done in 9.92973s
+C Parallel run. - done in 8.79551s
 --------------------------------------------------
 use function
-C_tuple_next Parallel run. - done in 16.43504s
-C_next Parallel run. - done in 15.63722s
+C_tuple_next Parallel run. - done in 9.92504s
+C_next Parallel run. - done in 9.38803s
 """
