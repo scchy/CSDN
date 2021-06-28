@@ -130,6 +130,20 @@ def test(test_epoches=80):
     )
 
 
+import matplotlib.pyplot as plt
+draw_x = np.linspace(-10, 10, 1000)
+fig, axes = plt.subplots(1, 2, figsize=(16, 8))
+axes[0].plot(draw_x, activation(draw_x, method='sigmoid'), label='sigmoid')
+axes[0].plot(draw_x, activation(draw_x, method='arctan'), label='arctan')
+axes[0].set_title('Activation')
+axes[0].legend()
+axes[1].plot(draw_x, activation_derivative(activation(draw_x, method='sigmoid'), method='sigmoid'), label='sigmoid')
+axes[1].plot(draw_x, activation_derivative(draw_x, method='arctan'), label='arctan')
+axes[1].set_title('Activation Derivation')
+axes[1].legend()
+plt.show()
+
+
 if  __name__ == '__main__':
     for t_epoches in [10, 40, 60, 100]:
         print('**'*25)
