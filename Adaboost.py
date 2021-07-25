@@ -21,6 +21,7 @@ __doc__ = """
 
 from sklearn.datasets import make_classification
 from sklearn.model_selection import train_test_split
+from sklearn.ensemble import AdaBoostClassifier
 from sklearn.metrics import f1_score
 from sklearn.linear_model import LogisticRegression
 import numpy as np
@@ -48,7 +49,6 @@ class BaseFunction:
         incorrect = y_true != iboost_pred
         # print(f'incorrect.shape: {incorrect.shape}')
         return np.average(incorrect.flatten(), weights=sample_weight.flatten())
-
 
     def iboost_weight(self, error):
         return 0.5 * np.log( (1-error) / error)
@@ -246,7 +246,14 @@ def test(n):
     adb_lr.fit(x_tr, y_tr)
     adb_lr_pred = adb_lr.predict(x_te)
     adb_lr_f1 = f1_score(y_te, adb_lr_pred>0.5)
-    info_out = f'[test-{n}] dtree-f1:{tree_adb:.5f}; my-lr f1: {f1_:.5f}; lr-f1:{f1_lr:.5f}; \n\tmy-adaboost-dtree:{f1_adb:.5f}; my-adaboost-lr:{adb_lr_f1:.5f}'
+
+    adb_sk = AdaBoostClassifier()
+    adb_sk.fit(x_tr, y_tr)
+    adb_sk_pred = adb_sk.predict(x_te)
+    adb_sk_f1 = f1_score(y_te, adb_sk_pred>0.5)
+
+
+    info_out = f'[test-{n}] dtree-f1:{tree_adb:.5f}; my-lr f1: {f1_:.5f}; lr-f1:{f1_lr:.5f}; \n\tmy-adaboost-dtree:{f1_adb:.5f}; my-adaboost-lr:{adb_lr_f1:.5f}; adaboost-sklearn:{adb_sk_f1:.5f}'
     print(info_out)
     print('Done')
     return info_out
@@ -290,4 +297,19 @@ if __name__ == '__main__':
 
 [test-3] dtree-f1:0.86525; my-lr f1: 0.87121; lr-f1:0.88321;
         my-adaboost-dtree:0.92481; my-adaboost-lr:0.87218
+
+[test-0] dtree-f1:0.82449; my-lr f1: 0.83465; lr-f1:0.82305;
+        my-adaboost-dtree:0.89167; my-adaboost-lr:0.83137; adaboost-sklearn:0.82500
+
+
+[test-1] dtree-f1:0.74265; my-lr f1: 0.76471; lr-f1:0.77043;
+        my-adaboost-dtree:0.84252; my-adaboost-lr:0.76471; adaboost-sklearn:0.79518
+
+
+[test-2] dtree-f1:0.75090; my-lr f1: 0.81911; lr-f1:0.83154;
+        my-adaboost-dtree:0.88727; my-adaboost-lr:0.82712; adaboost-sklearn:0.82090
+
+
+[test-3] dtree-f1:0.81618; my-lr f1: 0.89062; lr-f1:0.90909;
+        my-adaboost-dtree:0.92481; my-adaboost-lr:0.89062; adaboost-sklearn:0.89552
 """
