@@ -220,12 +220,38 @@ te_p_xgb = xgb_model.predict(te_mt)
 np.round(te_p_xgb) == te_y
 loss_f.mse(te_y, te_p_xgb)
 
-xgb_model.trees_to_dataframe()
+xgb_tree = xgb_model.trees_to_dataframe()
+print(xgb_tree)
 cs.print(xgb_f.split_dict)
 
 xgb_model.get_score(importance_type='gain')
 cs.print( xgb_f.gain_importance() )
 
+# =================================================================================================
+# SHAP VALUE 值
+import shap
+ex_xgb = shap.TreeExplainer(xgb_model)
+shap_te = ex_xgb(te_x)
+# E(f(z)) base value 是训练集的预测值的均值
+shap_te.base_values[0], np.mean(xgb_model.predict(tr_mt))
+shap_base = np.mean(xgb_model.predict(tr_mt))
 
 
+# 预测值 = 结点和+model_base(0.5) = 所有特征的贡献度+shap_base(0.99165833)
+x1_contribution = xgb_model.predict(te_mt, pred_interactions=True)[0].sum(axis=1)
+x1_contribution.sum(), xgb_model.predict(te_mt)[0], 0.987377  +  -0.099507 -0.199235 + 0.5
+x1_contribution
 
+# te_x[0] feature contrubition
+print(xgb_tree)
+# array([6.1, 2.8, 4.7, 1.2])
+## F2 贡献度 fx(s U f2) - fx(s)
+frac = 80/120
+f2_con = (0.987377 - (0.987377*frac + -0.499875*(1-frac))
+-0.099507 - (-0.099507*frac +  0.199060*(1-frac)))
+
+## f3 贡献度 fx(s U f2) - fx(s)
+frac_3 = 85/120
+f3_con = -0.199235 - (-0.199235*frac_3 + 0.483914*(1-frac_3))
+
+f2_con + f3_con + shap_base
