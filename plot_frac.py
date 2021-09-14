@@ -36,9 +36,10 @@ class PlotFrac():
         frac_plot = str(frac).split('.')[1]
         if len(frac_plot) <= 900:
             return '可除尽小数，不绘制'
-
+        turtle.screensize(800, 600)
         for i in range(self.plot_len):
-            turtle.speed(10)
+            turtle.speed('fastest')
+            turtle.delay(0)
             ang_i = int(frac_plot[i])
             self.plot_angle(ang_i)
 
@@ -63,7 +64,7 @@ if __name__ == '__main__':
                 continue       
     
     # 无理数集合
-    l_ = [Decimal(np.pi), Decimal(np.e), ( Decimal(np.sqrt(5)) - Decimal(1))/ 2]
+    l_ = [Decimal(np.e), Decimal(np.pi), ( Decimal(np.sqrt(5)) - Decimal(1))/ 2]
     p = PlotFrac(plot_len=9000)
 
     for i in l_:
