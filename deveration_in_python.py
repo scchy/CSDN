@@ -5,6 +5,7 @@
 # =================================================================================================
 
 
+from re import T
 import numpy as np
 import torch as t
 
@@ -39,6 +40,7 @@ x.grad, logit_deveration(y)
 # 参数估算
 # -----------------------------------------------------------------
 from scipy import optimize
+from sklearn.linear_model import LinearRegression
 
 def linear_model_fn(params, *args):
     w, b = params
@@ -49,5 +51,8 @@ def linear_model_fn(params, *args):
 
 x = np.arange(10)
 y = x * 20 + 9 + np.random.randn(10)
-optimize.fmin_l_bfgs_b(linear_model_fn, x0=np.array([0.001, 0.001]), args=(y, x), approx_grad=True)
+opt_result = optimize.fmin_l_bfgs_b(linear_model_fn, x0=np.array([0.001, 0.001]), args=(y, x), approx_grad=True)
 
+lr = LinearRegression(fit_intercept=True)
+lr.fit(x.reshape(-1,1), y)
+lr.coef_, lr.intercept_, opt_result[0]
