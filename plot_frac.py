@@ -37,7 +37,7 @@ class PlotFrac():
         if len(frac_plot) <= 900:
             return '可除尽小数，不绘制'
         turtle.penup()
-        turtle.goto(-400, 300)
+        turtle.goto(-0, 0)
         turtle.pendown()
         for i in range(self.plot_len):
             turtle.speed('fastest')
@@ -72,8 +72,8 @@ if __name__ == '__main__':
     y = np.random.rand(n)
     pi_= Decimal(int(np.sum((x * x + y * y) < 1))) * Decimal(4) / Decimal(n)
     e_ = Decimal((1+1/n))**Decimal(n)
-    l_ = [Decimal(math.pi), Decimal(math.pi), ( Decimal(np.sqrt(5)) - Decimal(1))/ 2]
-    p = PlotFrac(forward_len=5, plot_len=9000)
+    l_ = [ ( Decimal(np.sqrt(5)) - Decimal(1))/ 2] #, Decimal(math.e), Decimal(math.pi)]
+    p = PlotFrac(forward_len=5, plot_len=9900)
 
     for i in l_:
         loop = True
